@@ -1,0 +1,36 @@
+.pSprite {
+    display: block;
+    margin-right: 78.5%;
+    margin-left : 21.5%;
+ 
+    margin-bottom: 3%;
+    width: 150px;
+    height: 150px
+}
+.oSprite {
+    display : block;
+    margin-top: 15%;
+    margin-right : 27%;
+    margin-left : 73%;
+    width : 150px;
+    height : 150px
+}
+
+.header {
+    font-size: 50px;
+    text-align: center;
+}
+.button{
+    display: flex;
+    margin-right : auto;
+    margin-left : auto;
+    justify-content: center;
+}
+
+body {
+    margin: 0;
+    height: 20vh;
+    background-image: url("background.png") ;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
