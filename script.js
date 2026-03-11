@@ -1,3 +1,4 @@
+let h1 = document.getElementById("h1")
 let guard = document.getElementById("Guard")
 let guardBreak = document.getElementById("Guard Break")
 let thrust = document.getElementById("Thrust")
@@ -8,13 +9,13 @@ let p3 = document.getElementById("p3")
 let pSprite = document.getElementById("playerSprite")
 let oSprite = document.getElementById("opponentSprite")
 let actions = ["guard", "guardBreak", "thrust", "counter"]
-//let images = ["guard.png", "guardBreak.png", "thrust.png", "counter.png"]
+let images = ["guard.png", "guardBreak.png", "thrust.png", "counter.png"]
 let battles = [1, 2, 3, 4]
 let playerLife = 1
 let counterCounter = 0;
 let curFight = "Fight 1"
 let oHealth = 1
-let deathBackgound = "deathScreenBackground.png"
+let deathBackgound = "url(deathScreenBackground.png)"
 
 window.addEventListener("load", battle)
 
@@ -38,7 +39,7 @@ function battle(){
 function eAct(){
     let choice = Math.floor(Math.random()*4)
     let oAct = actions[choice];
-    //oSprite.src = images[choice]
+    oSprite.src = images[choice]
     return oAct
 }
 
@@ -46,13 +47,13 @@ function eAct(){
 function chooseAction(act){
     let oAct = eAct()
     if (act == "guard") {
-        pSprite.src = "";
+        pSprite.src = "guard.png";
     } else if (act == "guardBreak") {
-        pSprite.src = "";
+        pSprite.src = "pGuardBreak.png";
     } else if (act == "counter") {
-        pSprite.src = "";
+        pSprite.src = "pCounter.png";
     } else if (act == "thrust") {
-        pSprite.src = "";
+        pSprite.src = "pThrust.png";
     } else {
 
     }
@@ -70,8 +71,10 @@ function turn(act, oAct){
             switch (oAct){
                 case "guardBreak":
                     oHealth -= 1;
+                    console.log(act, oAct);
                     break
                 case "thrust":
+                    console.log(act, oAct);
                     oHealth -= 1;
                     break
             }
@@ -79,20 +82,25 @@ function turn(act, oAct){
         case "guardBreak":
             switch (oAct){
                 case "thrust":
+                    console.log(act, oAct);
                     deathScreen();
                     break;
                 case "counter":
+                    console.log(act, oAct);
                     deathScreen();
                     break;
                 case "guard":
+                    console.log(act, oAct);
                     oHealth -= 1;
             }
             break;
         case "guard":
             switch (oAct){
                 case "thrust":
+                    console.log(act, oAct);
                     break;
                 case "guardBreak":
+                    console.log(act, oAct);
                     deathScreen();
                     break;
             }
@@ -100,9 +108,11 @@ function turn(act, oAct){
         case "thrust":
             switch (oAct){
                 case "guardBreak":
+                    console.log(act, oAct);
                     oHealth -= 1;
                     break;
                 case "counter":
+                    console.log(act, oAct);
                     deathScreen();
                     break;
             }
@@ -112,7 +122,14 @@ function turn(act, oAct){
 }
 
 function deathScreen(){
+    oSprite.style.display = "none";
+    pSprite.style.display = "none";
+    guard.style.display = "none";
+    thrust.style.display = "none";
+    guardBreak.style.display = "none";
+    counter.style.display = "none";
+    h1.style.display = "none";
     p1.innerText = "You Lose";
-    p1.style.fontSize = 50;
     document.getElementById("body").style.backgroundImage = deathBackgound;
+    console.log(document.getElementById("body"))
 }
