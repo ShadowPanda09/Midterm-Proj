@@ -8,10 +8,13 @@ let p3 = document.getElementById("p3")
 let pSprite = document.getElementById("playerSprite")
 let oSprite = document.getElementById("opponentSprite")
 let actions = ["guard", "guardBreak", "thrust", "counter"]
-let images = ["guard.png", "guardBreak.png", "thrust.png", "counter.png"]
+//let images = ["guard.png", "guardBreak.png", "thrust.png", "counter.png"]
 let battles = [1, 2, 3, 4]
 let playerLife = 1
 let counterCounter = 0;
+let curFight = "Fight 1"
+let oHealth = 1
+let deathBackgound = "deathScreenBackground.png"
 
 window.addEventListener("load", battle)
 
@@ -35,7 +38,7 @@ function battle(){
 function eAct(){
     let choice = Math.floor(Math.random()*4)
     let oAct = actions[choice];
-    oSprite.src = images[choice]
+    //oSprite.src = images[choice]
     return oAct
 }
 
@@ -58,15 +61,58 @@ function chooseAction(act){
 
 function turn(act, oAct){
     if (counterCounter > 0 && act == "counter"){
-        console.log("You lose");
+        deathScreen()
         console.log(counterCounter);
 }
-    else if (act == "counter"){
-        console.log(act);
-        console.log(oAct);
-        counterCounter++;
-    } else {
-        console.log(act);
-        console.log(oAct);
+    switch (act){
+        case "counter":
+            counterCounter++;
+            switch (oAct){
+                case "guardBreak":
+                    oHealth -= 1;
+                    break
+                case "thrust":
+                    oHealth -= 1;
+                    break
+            }
+            break;
+        case "guardBreak":
+            switch (oAct){
+                case "thrust":
+                    deathScreen();
+                    break;
+                case "counter":
+                    deathScreen();
+                    break;
+                case "guard":
+                    oHealth -= 1;
+            }
+            break;
+        case "guard":
+            switch (oAct){
+                case "thrust":
+                    break;
+                case "guardBreak":
+                    deathScreen();
+                    break;
+            }
+            break;
+        case "thrust":
+            switch (oAct){
+                case "guardBreak":
+                    oHealth -= 1;
+                    break;
+                case "counter":
+                    deathScreen();
+                    break;
+            }
+            break;
+
     }
+}
+
+function deathScreen(){
+    p1.innerText = "You Lose";
+    p1.style.fontSize = 50;
+    document.getElementById("body").style.backgroundImage = deathBackgound;
 }
