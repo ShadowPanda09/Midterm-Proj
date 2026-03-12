@@ -20,6 +20,7 @@ let reset = document.createElement("button");
 let goNext = document.createElement("button");
 let attempts = 0;
 let guardNum = 0;
+let oTotal = 1;
 reset.innerText = "Reset"
 reset.style.display = "none"
 goNext.innerText = "Continue"
@@ -37,6 +38,8 @@ function battle1(){
 
     //set background and interactables to default values
     document.getElementById("body").style.backgroundImage ="url(background.png)";
+    document.getElementById("health-bar").style.display = "block"
+    p2.style.display = "none"
     oSprite.style.display = "block";
     pSprite.style.display = "block";
     guard.style.display = "block";
@@ -48,6 +51,7 @@ function battle1(){
     oSprite.src = "sprite.png";
     pSprite.src = "sprite.png";
     reset.style.display = "none";
+    setHealth(100)
 
 
     //prevent duplicate event listeners
@@ -98,63 +102,63 @@ function turn(act, oAct){
     //prevent multiple counters by the player per combat
     if (counterCounter > 0 && act == "counter"){
         deathScreen()
-        console.log(counterCounter);
 }
 
     //logic handling for combat choices
-    switch (act){
-        case "counter":
-            counterCounter++;
-            switch (oAct){
-                case "guardBreak":
-                    oHealth -= 1;
-                    console.log(act, oAct);
-                    break
-                case "thrust":
-                    console.log(act, oAct);
-                    oHealth -= 1;
-                    break
-            }
-            break;
-        case "guardBreak":
-            switch (oAct){
-                case "thrust":
-                    console.log(act, oAct);
-                    deathScreen();
-                    break;
-                case "counter":
-                    console.log(act, oAct);
-                    deathScreen();
-                    break;
-                case "guard":
-                    console.log(act, oAct);
-                    oHealth -= 1;
-            }
-            break;
-        case "guard":
-            switch (oAct){
-                case "thrust":
-                    console.log(act, oAct);
-                    break;
-                case "guardBreak":
-                    console.log(act, oAct);
-                    deathScreen();
-                    break;
-            }
-            break;
-        case "thrust":
-            switch (oAct){
-                case "guardBreak":
-                    console.log(act, oAct);
-                    oHealth -= 1;
-                    break;
-                case "counter":
-                    console.log(act, oAct);
-                    deathScreen();
-                    break;
-            }
-            break;
-
+    else {
+        switch (act){
+            case "counter":
+                counterCounter++;
+                switch (oAct){
+                    case "guardBreak":
+                        oHealth -= 1;
+                        setHealth(100*(oHealth/oTotal))
+                        break
+                    case "thrust":
+                        oHealth -= 1;
+                        setHealth(100*(oHealth/oTotal))
+                        break
+                }
+                break;
+            case "guardBreak":
+                switch (oAct){
+                    case "thrust":
+                        deathScreen();
+                        break;
+                    case "counter":
+                        deathScreen();
+                        break;
+                    case "guard":
+                        oHealth -= 1;
+                        setHealth(100*(oHealth/oTotal))
+                        
+                }
+                break;
+            case "guard":
+                switch (oAct){
+                    case "thrust":
+                        console.log(act, oAct);
+                        break;
+                    case "guardBreak":
+                        console.log(act, oAct);
+                        deathScreen();
+                        break;
+                }
+                break;
+            case "thrust":
+                switch (oAct){
+                    case "guardBreak":
+                        console.log(act, oAct);
+                        oHealth -= 1;
+                        setHealth(100*(oHealth/oTotal))
+                        break;
+                    case "counter":
+                        console.log(act, oAct);
+                        deathScreen();
+                        break;
+                }
+                break;
+        }
     }
     if (oHealth <= 0) {
         nextFight()
@@ -171,6 +175,7 @@ function deathScreen(){
     counter.style.display = "none";
     h1.style.display = "none";
     p1.innerText = "You Lose";
+    document.getElementById("health-bar").style.display = "none"
     document.getElementById("body").style.backgroundImage = deathBackgound;
     console.log(document.getElementById("body"))
     document.getElementById("body").appendChild(reset)
@@ -181,10 +186,15 @@ function deathScreen(){
     reset.addEventListener("click", battle1)
     fight = 1;
     oHealth = 1;
+
 }
 
 function nextFight(){
+    setHealth(100)
     fight++;
+    document.getElementById("health-bar").style.display = "none"
+    p2.innerText = "You Won the Fight!"
+    p2.style.display = "block"
     oSprite.style.display = "none";
     pSprite.style.display = "none";
     guard.style.display = "none";
@@ -203,14 +213,22 @@ function nextFight(){
 
 function battle(){
     goNext.style.display = "none"
+    p2.innerText = ""
     if (fight == 2){
         oHealth = 2
+        oTotal = 2
         battle1()
     } else if (fight == 3){
         oHealth = 4
+        oTotal = 4
         battle1()
     } else if (fight == 4){
         oHealth = 10
+        oTotal = 10
         battle1()
     }
+}
+
+function setHealth(percent) {
+  document.getElementById("healthFill").style.width = percent + "%";
 }
