@@ -15,9 +15,9 @@ let fight = 1
 let playerLife = 1
 let counterCounter = 0;
 let oHealth = 1
-
+let deathBackground = "url(deathScreenBackground.png"
 try {
-    let deathBackgound = "url(deathScreenBackground.png)"
+    deathBackground = "url(deathScreenBackground.png)"
 } catch (error) {
     console.log(error)
 }
@@ -227,7 +227,7 @@ function deathScreen(){
     p1.innerText = "You Lose";
     p3.innerText = "";
     document.getElementById("health-bar").style.display = "none"
-    document.getElementById("body").style.backgroundImage = deathBackgound;
+    document.getElementById("body").style.backgroundImage = deathBackground;
     document.getElementById("body").appendChild(reset)
     reset.innerText = "Reset"
     reset.style.display = "flex"
@@ -333,7 +333,7 @@ function intermission1(){
     h1.style.display = "none";
     p1.innerText = "What Could You Possibly Accomplish?";
     document.getElementById("health-bar").style.display = "none"
-    document.getElementById("body").style.backgroundImage = deathBackgound;
+    document.getElementById("body").style.backgroundImage = deathBackground;
     document.getElementById("body").appendChild(reset)
     reset.style.display = "flex"
     reset.style.marginRight = "auto"
@@ -356,7 +356,7 @@ function intermission2(){
     h1.style.display = "none";
     p1.innerText = "You Cannot Possibly Progress Through This Path";
     document.getElementById("health-bar").style.display = "none"
-    document.getElementById("body").style.backgroundImage = deathBackgound;
+    document.getElementById("body").style.backgroundImage = deathBackground;
     document.getElementById("body").appendChild(reset)
     reset.style.display = "flex"
     reset.style.marginRight = "auto"
@@ -378,7 +378,7 @@ function intermission3(){
     h1.style.display = "none";
     p1.innerText = "Fine";
     document.getElementById("health-bar").style.display = "none"
-    document.getElementById("body").style.backgroundImage = deathBackgound;
+    document.getElementById("body").style.backgroundImage = deathBackground;
     document.getElementById("body").appendChild(reset)
     reset.style.display = "flex"
     reset.style.marginRight = "auto"
